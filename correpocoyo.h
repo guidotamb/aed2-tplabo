@@ -327,7 +327,7 @@ ostream& operator<<(ostream& out, const CorrePocoyo<T>& a) {
 			this->primero = this->primero->anterior;
 		}
 
-		if (nCompetidores > 0)
+		if (nCompetidores > 1)
 		{
 			corredor->anterior->siguiente = corredor->siguiente;
 			corredor->siguiente->anterior = corredor->anterior;
