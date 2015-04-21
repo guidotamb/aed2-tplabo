@@ -327,25 +327,29 @@ ostream& operator<<(ostream& out, const CorrePocoyo<T>& a) {
 			this->primero = this->primero->anterior;
 		}
 
-
-		corredor->anterior->siguiente = corredor->siguiente;
-		corredor->siguiente->anterior = corredor->anterior;
-
-		//Corrijo posiciones.
-		Nodo* n = corredor->anterior;
-		nCompetidores--;
-		//Si no es el ultimo
-		if (n->corredor != this->primero->corredor){
-		n->posicion = n->posicion -1;
-		int i;
-		for (i = n->posicion; i <= nCompetidores; i++)
+		if (nCompetidores > 0)
 		{
-			n->posicion = n->posicion -1;
-			n = n->anterior;
+			corredor->anterior->siguiente = corredor->siguiente;
+			corredor->siguiente->anterior = corredor->anterior;
+
+			//Corrijo posiciones.
+			Nodo* n = corredor->anterior;
+			nCompetidores--;
+			//Si no es el ultimo
+			if (n->corredor != this->primero->corredor)
+			{
+				n->posicion = n->posicion -1;
+				int i;
+				for (i = n->posicion; i <= nCompetidores; i++)
+				{
+					n->posicion = n->posicion -1;
+					n = n->anterior;
+				}
+			}
+			delete corredor;
+		}else{
+			delete corredor;
 		}
-		}
-		
-		delete corredor;
 	}
 	
 	template<class T>
