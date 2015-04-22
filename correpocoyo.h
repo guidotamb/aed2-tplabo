@@ -321,24 +321,32 @@ ostream& operator<<(ostream& out, const CorrePocoyo<T>& a) {
 				encuentroNodo = true;
 			}
 		}
-		//Si el corredor era el primero, le asigno primero al segundo.
-		if (corredor->corredor == this->primero->corredor)
-		{
-			this->primero = this->primero->anterior;
-		}
-
+		//Ya encontramos al corredor que se cansa.
+		
 		if (nCompetidores > 1)
-		{
+		{	
+			//Si el corredor era el primero o el filmado, le asigno al segundo.
+			if (corredor->corredor == this->filmado->corredor)
+			{
+				this->filmado = this->filmado->anterior;
+			}
+			
+			if (corredor->corredor == this->primero->corredor)
+			{
+				this->primero = this->primero->anterior;
+			}
+			
+			//Corrijo relaciones
 			corredor->anterior->siguiente = corredor->siguiente;
 			corredor->siguiente->anterior = corredor->anterior;
 
 			//Corrijo posiciones.
 			Nodo* n = corredor->anterior;
 			nCompetidores--;
-			//Si no es el ultimo
-			if (n->corredor != this->primero->corredor)
+			
+			//Si no es el ultimo, correjimos
+			if (corredor->posicion -1 != nCompetidores)
 			{
-				n->posicion = n->posicion -1;
 				int i;
 				for (i = n->posicion; i <= nCompetidores; i++)
 				{
@@ -349,6 +357,8 @@ ostream& operator<<(ostream& out, const CorrePocoyo<T>& a) {
 			delete corredor;
 		}else{
 			delete corredor;
+			this->primero = NULL;
+			this->filmado = NULL;
 		}
 	}
 	
@@ -538,4 +548,3 @@ ostream& operator<<(ostream& out, const CorrePocoyo<T>& a) {
 
 
 #endif //CORREPOCOYO_H_
-
